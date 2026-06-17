@@ -31,27 +31,26 @@ async function getsongs(folder) {
     let songUl = document.querySelector(".songlist").getElementsByTagName("ul")[0];
     songUl.innerHTML = "";
 
-    for (const song of songs) {
-        let displayName = song.replaceAll("_", " ").replace(".mp3", "");
-        songUl.innerHTML += `<li>
-            <img class="invert" src="img/music.svg" alt="">
-            <div class="info">
-                <div>${displayName}</div>
-                <div>~.Rd.~®</div>
-            </div>
-            <div class="playnow">
-                <span>Play Now</span>
-                <img class="invert" src="img/play.svg" alt="">
-            </div>
-        </li>`;
-    }
+   for (const song of songs) {
+    let displayName = song.replaceAll("_", " ").replace(".mp3", "");
+    songUl.innerHTML += `<li data-song="${song}">
+        <img class="invert" src="img/music.svg" alt="">
+        <div class="info">
+            <div>${displayName}</div>
+            <div>~.Rd.~®</div>
+        </div>
+        <div class="playnow">
+            <span>Play Now</span>
+            <img class="invert" src="img/play.svg" alt="">
+        </div>
+    </li>`;
+}
 
-    Array.from(document.querySelector(".songlist").getElementsByTagName("li")).forEach(e => {
-        e.addEventListener("click", () => {
-            playMusic(e.querySelector(".info").firstElementChild.innerHTML.trim());
-        });
+  Array.from(document.querySelector(".songlist").getElementsByTagName("li")).forEach(e => {
+    e.addEventListener("click", () => {
+        playMusic(e.dataset.song) // ✅ passes original filename
     });
-
+});
     return songs;
 }
 
